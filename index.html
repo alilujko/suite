@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Forum</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    text-align:center;
+    padding:30px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 20px #00f7ff55;
+}
+
+header h1{
+    font-size:3rem;
+    color:#00f7ff;
+    text-shadow:0 0 20px #00f7ff;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.create-post{
+    background:#1e293b;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:25px;
+    box-shadow:0 0 20px rgba(0,247,255,.2);
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:12px;
+    background:#334155;
+    color:white;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    background:#00f7ff;
+    color:#111;
+    font-weight:bold;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #00f7ff;
+}
+
+.post{
+    background:#1e293b;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:20px;
+    animation:fadeIn .4s;
+    box-shadow:0 0 15px rgba(0,247,255,.15);
+}
+
+.post h3{
+    color:#00f7ff;
+}
+
+.post p{
+    margin:10px 0;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.like-btn{
+    background:#ff4d6d;
+    color:white;
+}
+
+.comment-box{
+    margin-top:15px;
+}
+
+.comment{
+    background:#334155;
+    padding:8px;
+    border-radius:10px;
+    margin-top:6px;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>⚡ Neon Forum ⚡</h1>
+    <p>Спілкуйся, лайкай та коментуй</p>
+</header>
+
+<div class="container">
+
+    <div class="create-post">
+        <input type="text" id="author" placeholder="Твоє ім'я">
+        <input type="text" id="title" placeholder="Заголовок теми">
+        <textarea id="content" placeholder="Що хочеш написати?"></textarea>
+        <button onclick="addPost()">Створити пост</button>
+    </div>
+
+    <div id="posts"></div>
+
+</div>
+
+<script>
+const postsContainer = document.getElementById("posts");
+
+function addPost(){
+
+    const author = document.getElementById("author").value;
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+
+    if(!author || !title || !content){
+        alert("Заповни всі поля!");
+        return;
+    }
+
+    const post = document.createElement("div");
+    post.className = "post";
+
+    post.innerHTML = `
+        <h3>${title}</h3>
+        <small>👤 ${author}</small>
+        <p>${content}</p>
+
+        <div class="actions">
+            <button class="like-btn">❤️ 0</button>
+        </div>
+
+        <div class="comment-box">
+            <input type="text" class="comment-input" placeholder="Написати коментар...">
+            <button class="comment-btn">💬 Коментувати</button>
+            <div class="comments"></div>
+        </div>
+    `;
+
+    const likeBtn = post.querySelector(".like-btn");
+    let likes = 0;
+
+    likeBtn.addEventListener("click", () => {
+        likes++;
+        likeBtn.textContent = `❤️ ${likes}`;
+    });
+
+    const commentBtn = post.querySelector(".comment-btn");
+    const commentInput = post.querySelector(".comment-input");
+    const comments = post.querySelector(".comments");
+
+    commentBtn.addEventListener("click", () => {
+        if(commentInput.value.trim() === "") return;
+
+        const comment = document.createElement("div");
+        comment.className = "comment";
+        comment.textContent = commentInput.value;
+
+        comments.appendChild(comment);
+        commentInput.value = "";
+    });
+
+    postsContainer.prepend(post);
+
+    document.getElementById("author").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+}
+
+addPostDemo(
+    "Admin",
+    "Ласкаво просимо!",
+    "Це сучасний неоновий форум. Створюй теми та спілкуйся 🚀"
+);
+
+function addPostDemo(author,title,content){
+    document.getElementById("author").value = author;
+    document.getElementById("title").value = title;
+    document.getElementById("content").value = content;
+    addPost();
+}
+</script>
+
+</body>
+</html>
