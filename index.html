@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <input type="text" id="t">
-    <button onclick="hi">Привіт</button>
 
-    <script>
-        const text = document.querySelector("#t")
+<html lang="ua">
+    <head>
+        <meta charset="UTF-8">
+        <title>Показати зображення</title>
+        <link rel="icon" type="image/png" href="www.png">
+    </head>
+    <body>
 
-        function hi(){
-            alert("Привіт", text)
-        }
-    </script>
+        <input type="text" id="imageUrl" placeholder="Вставте посилання на зображення">
+        <button onclick="showImage()">Показати зображення</button>
 
-</body>
+        <br><br>
+
+        <img id="image" width="300" alt="Зображення">
+
+        <script>
+            function showImage() {
+                const url = document.getElementById("imageUrl").value;
+                document.getElementById("image").src = url;
+            }
+        </script>
+
+    </body>
 </html>
