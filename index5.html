@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="ua">
+    <head>
+        <meta charset="UTF-8">
+        <title>Показати зображення</title>
+        <link rel="icon" type="image/png" href="www.png">
+    </head>
+    <body>
+
+        <input type="text" id="imageUrl" placeholder="Вставте посилання на зображення">
+        <button onclick="showImage()">Показати зображення</button>
+
+        <br><br>
+
+        <img id="image" width="300" alt="Зображення">
+
+        <script>
+            function showImage() {
+                const url = document.getElementById("imageUrl").value;
+                document.getElementById("image").src = url;
+            }
+        </script>
+
+    </body>
+</html>
